@@ -16,11 +16,12 @@ dotenv.config();
 
 const app = express();
 
-// Enable CORS for all origins
+// Enable CORS for specific origins
 app.use(cors({
-  origin: '*', // Allow all origins
+  origin: ['http://localhost:6969', 'https://muhsalmanabid.xyz', 'https://muhsalmanabid.tech'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // Added credentials: true as it's often needed when specifying origins
 }));
 
 app.use(express.json());
