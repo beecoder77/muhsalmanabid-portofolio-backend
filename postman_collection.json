@@ -1,0 +1,660 @@
+{
+  "info": {
+    "name": "Portofolio Muhammad Salman Abid API",
+    "description": "API documentation for the Muhammad Salman Abid Portofolio application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Get Health Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    console.log('Token saved to collection:', jsonData.token);",
+                  "} else {",
+                  "    console.log('No token in response');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"user@example.com\",\n    \"password\": \"password123\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            }
+          }
+        },
+        {
+          "name": "Get Contact Counts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/contact-counts",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "contact-counts"]
+            }
+          }
+        },
+        {
+          "name": "Add Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Muhammad Salman Abid\",\n  \"title\": \"Backend Developer\",\n  \"city\": \"Jakarta, Indonesia\",\n  \"tagline\": \"Experienced Backend Developer...\",\n  \"aboutMe\": \"Backend Developer...\",\n  \"photo\": \"https://example.com/photo.jpg\",\n  \"socialMedia\": [{\"type\":\"linkedin\",\"url\":\"https://linkedin.com/in/muhsalmanabid\"}]\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile/:id",
+              "host": ["{{base_url}}"],
+              "path": ["profile", ":id"],
+              "variable": [
+                { "key": "id", "value": "1" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Profile",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile/:id",
+              "host": ["{{base_url}}"],
+              "path": ["profile", ":id"],
+              "variable": [
+                { "key": "id", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Contact Counts",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile/contact-counts",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "contact-counts"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contactCount\": \"new_contact_count\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Education",
+      "item": [
+        {
+          "name": "Get Educations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/education?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["education"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Education",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/education",
+              "host": ["{{base_url}}"],
+              "path": ["education"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"school\": \"University Name\",\n    \"degree\": \"Bachelor's Degree\",\n    \"field\": \"Computer Science\",\n    \"startDate\": \"2018-09\",\n    \"endDate\": \"2022-06\",\n    \"description\": \"Relevant coursework and achievements...\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Education",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/education/:id",
+              "host": ["{{base_url}}"],
+              "path": ["education", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "education_id_here"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"school\": \"Updated University Name\",\n    \"degree\": \"Master's Degree\",\n    \"field\": \"Computer Science\",\n    \"startDate\": \"2022-09\",\n    \"endDate\": \"2024-06\",\n    \"description\": \"Updated description...\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Education",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/education/:id",
+              "host": ["{{base_url}}"],
+              "path": ["education", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "education_id_here"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Experience",
+      "item": [
+        {
+          "name": "Get Experiences",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/experience?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["experience"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Experience",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/experience",
+              "host": ["{{base_url}}"],
+              "path": ["experience"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"company\": \"Company Name\",\n    \"position\": \"Software Engineer\",\n    \"startDate\": \"2022-01\",\n    \"endDate\": \"2023-12\",\n    \"description\": \"Job responsibilities and achievements...\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Experience",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/experience/:id",
+              "host": ["{{base_url}}"],
+              "path": ["experience", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "experience_id_here"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"company\": \"Updated Company Name\",\n    \"position\": \"Senior Software Engineer\",\n    \"startDate\": \"2023-01\",\n    \"endDate\": \"2024-12\",\n    \"description\": \"Updated job responsibilities...\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Experience",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/experience/:id",
+              "host": ["{{base_url}}"],
+              "path": ["experience", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "experience_id_here"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Get Projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/projects?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["projects"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Project",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/projects",
+              "host": ["{{base_url}}"],
+              "path": ["projects"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Project Title\",\n    \"description\": \"Project description...\",\n    \"technologies\": [\"React\", \"Node.js\"],\n    \"githubUrl\": \"https://github.com/username/project\",\n    \"liveUrl\": \"https://project-demo.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/projects/:id",
+              "host": ["{{base_url}}"],
+              "path": ["projects", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "project_id_here"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Updated Project Title\",\n    \"description\": \"Updated project description...\",\n    \"technologies\": [\"React\", \"Node.js\", \"TypeScript\"],\n    \"githubUrl\": \"https://github.com/username/updated-project\",\n    \"liveUrl\": \"https://updated-project-demo.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/projects/:id",
+              "host": ["{{base_url}}"],
+              "path": ["projects", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "project_id_here"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Skills",
+      "item": [
+        {
+          "name": "Get Skills",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/skills?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["skills"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Skill",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/skills",
+              "host": ["{{base_url}}"],
+              "path": ["skills"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"JavaScript\",\n    \"category\": \"Programming Language\",\n    \"level\": \"Advanced\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Skill",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/skills/:id",
+              "host": ["{{base_url}}"],
+              "path": ["skills", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "skill_id_here"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"TypeScript\",\n    \"category\": \"Programming Language\",\n    \"level\": \"Expert\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Skill",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/skills/:id",
+              "host": ["{{base_url}}"],
+              "path": ["skills", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "skill_id_here"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Visitor",
+      "item": [
+        {
+          "name": "Track Visit (Landing Page)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/visitor/track",
+              "host": ["{{base_url}}"],
+              "path": ["visitor", "track"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fingerprint\": \"test-fingerprint\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Visit Stats (Landing Page)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/visitor/stats",
+              "host": ["{{base_url}}"],
+              "path": ["visitor", "stats"]
+            }
+          }
+        },
+        {
+          "name": "Get Visitors (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/visitor",
+              "host": ["{{base_url}}"],
+              "path": ["visitor"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000/api"
+    },
+    {
+      "key": "token",
+      "value": "your_jwt_token_here"
+    }
+  ]
+} 
